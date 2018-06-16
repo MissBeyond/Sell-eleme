@@ -59,6 +59,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         console.log('req',req.body,req.params,req.param(),req.query)
         res.json({
           errno: 0,
+          ret: true,
           data: seller
         })//接口返回json数据，上面配置的数据seller就赋值给data请求后调用
       }),

@@ -37,13 +37,12 @@ export default {
     },
     getHeaderInfoSucc (res) {
       res = res.data
-      console.log(res.ret,res.data)
       console.log(res.data.ret)
-      if(res.errno === 0 && res.data) {
+      if(res.ret && res.data) {
         const data = res.data
         this.seller = data
-        console.log(this.seller)
-        debugger
+
+        
       }
     }
   },
