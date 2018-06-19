@@ -32,17 +32,14 @@ export default {
   },
   methods: {
     getHeaderInfo () {
-      axios.post('/api/seller?id=123')
+      axios.get('/api/seller')
       .then(this.getHeaderInfoSucc)
     },
     getHeaderInfoSucc (res) {
       res = res.data
-      console.log(res.data.ret)
       if(res.ret && res.data) {
         const data = res.data
         this.seller = data
-
-        
       }
     }
   },

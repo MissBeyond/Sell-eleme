@@ -55,8 +55,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     },
     before(app) {
-      app.post('/api/seller', (req, res) => {
-        console.log('req',req.body,req.params,req.param(),req.query)
+      app.get('/api/seller', (req, res) => {
         res.json({
           errno: 0,
           ret: true,
@@ -66,12 +65,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       app.get('/api/goods',(req, res) => {
         res.json({
           errno: 0,
+          ret: true,
           data: goods
         })
       }),
       app.get('/api/ratings',(req, res) => {
         res.json({
           errno:0,
+          ret: true,
           data: ratings
         })
       })
