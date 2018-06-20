@@ -11,7 +11,7 @@
         </div>
         <div class="foods-wrapper" ref="foodsWrapper">
             <ul>
-                <li v-for="item in goods" class="food-list food-list-hook">
+                <li v-for="item in goods" class="food-list" ref="foodList">
                     <h1 class="title">{{item.name}}</h1>
                     <ul>
                         <li v-for="food in item.foods" class="food-item border-b-1px">
@@ -34,7 +34,7 @@
                 </li>
             </ul>
         </div>
-        <shopcart></shopcart>
+        <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
     </div>
 </template>
 <script>
@@ -60,11 +60,6 @@ export default {
         Shopcart
     },
     created() {
-        this.$nextTick(() => {//better-scroll的实例初始化要放在vm.$nextTick()里面才生效
-                // DOM已经更新完成 
-                this._initScroll()
-                this._calculateHeight()
-            })
         this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']//定义一个变量 
     },
     computed: {
@@ -93,7 +88,7 @@ export default {
                 return
             }
             //点击左侧的菜单项的时候，右边跳到相应的内容区域
-            let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')//获取到右边li对象
+            let foodList = this.$refs.foodList//获取到右边li对象
             let ref = foodList[index]//根据index，获取到右边具体滚动到的li
             this.foodsWrapperScroll.scrollToElement(ref, 300)//要滑动到右边的对象，300完成动作的时间
             
@@ -101,6 +96,7 @@ export default {
         getGoodsInfo () {
             axios.get('/api/goods')
             .then(this.getGoodsInfoSucc)
+            // .then(this._calculateHeight)
             
         },
         getGoodsInfoSucc (res) {
@@ -108,6 +104,11 @@ export default {
             if(res.ret && res.data) {
                 const data = res.data
                 this.goods = data
+                this.$nextTick(() => {
+                    //better-scroll的实例初始化要放在vm.$nextTick()里面才生效
+                    this._initScroll()
+                    this._calculateHeight()
+                })
             }
         },
         _initScroll () {//初始化需要滚动的对象  
@@ -126,25 +127,22 @@ export default {
                 //scrollY是自定义的变量，用于存储滚动的位置  
                 //Math.round(pos.y)是一个负数
                 this.scrollY = Math.abs( Math.round(pos.y) )
-                
             })
         },
         //将右侧的.foods-wrapper里面的每个li的高度进行累加，存放到数组listHeight里面
          _calculateHeight () {
-            let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+            let foodList = this.$refs.foodList
             let height = 0
-            // debugger
             this.listHeight.push(height)//第一个元素的高度是0 
             for( let i = 0; i < foodList.length; i++) {
                 let item = foodList[i]
                 height += item.clientHeight
                 this.listHeight.push(height)
             }
-            // debugger
         }
     },
     mounted () {
-        this.getGoodsInfo()
+        this.getGoodsInfo()        
     }
 }
 </script>
