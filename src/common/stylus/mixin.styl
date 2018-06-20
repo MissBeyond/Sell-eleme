@@ -10,6 +10,7 @@ border-t-1px($color)
         content: ' '
 
 border-b-1px($color)
+    position: relative
     &:after
         display: block
         position: absolute
@@ -19,16 +20,7 @@ border-b-1px($color)
         border-top: 1px solid $color
         content: ''
 
-border-1px($color)
-  position: relative
-  &:after
-    display: block
-    position: absolute
-    left: 0
-    bottom: 0
-    width: 100%
-    border-top: 1px solid $color
-    content: ' '
+
 
 border-none()
     &:after
