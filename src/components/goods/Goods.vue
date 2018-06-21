@@ -191,6 +191,7 @@ export default {
                         bg-image('invoice_3')
                     &.special
                         bg-image('special_3')
+                    
                 .text
                     display table-cell
                     width 56px
