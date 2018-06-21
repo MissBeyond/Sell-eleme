@@ -28,19 +28,23 @@
                                     <span class="now">￥{{food.price}}</span>
                                     <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                                 </div>
+                                <div class="cartcontrol-wrapper">
+                                    <cartcontrol :food="food"></cartcontrol>
+                                </div>
                             </div>
                         </li>
                     </ul>
                 </li>
             </ul>
         </div>
-        <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+        <shopcart ref:shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
     </div>
 </template>
 <script>
 import axios from 'axios'
 import BScroll from 'better-scroll'//引进这个实现上下滑动的插件  
 import Shopcart from 'components/shopcart/Shopcart'
+import Cartcontrol from 'components/cartcontrol/Cartcontrol'
 export default {
     name: 'Goods',
     props: {
@@ -57,7 +61,8 @@ export default {
         }
     },
     components: {
-        Shopcart
+        Shopcart,
+        Cartcontrol
     },
     created() {
         this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']//定义一个变量 
@@ -76,6 +81,17 @@ export default {
                 }
             }
             return 0//默认情况下是返回第一个元素  
+        },
+        selectFoods () {
+            let foods = []
+            this.goods.forEach((good) => {
+                good.foods.forEach((food) => {
+                    if(food.count) {
+                        foods.push(food)
+                    }
+                })
+            })
+            return foods
         }
     },
     methods: {
@@ -92,6 +108,15 @@ export default {
             let ref = foodList[index]//根据index，获取到右边具体滚动到的li
             this.foodsWrapperScroll.scrollToElement(ref, 300)//要滑动到右边的对象，300完成动作的时间
             
+        },
+        addFood(target) {
+            this._drop(target)
+        },
+        _drop(target) {
+            // 体验优化,异步执行下落动画
+            this.$nextTick(() => {
+            this.$refs.shopcart.drop(target)
+            });
         },
         getGoodsInfo () {
             axios.get('/api/goods')
@@ -117,7 +142,7 @@ export default {
                 click: true
             })
             this.foodsWrapperScroll = new BScroll(this.$refs.foodsWrapper,{
-                // click: true,
+                click: true,
                 probeType:3//设置实时监听滚动的位置的效果的属性  
             })
             //监听右侧滚动区域，左边相应的menu高亮  
@@ -250,6 +275,10 @@ export default {
                             text-decoration line-through
                             font-size 10px
                             color rgb(147, 153, 159)
+                    .cartcontrol-wrapper
+                        position absolute
+                        right 0
+                        bottom 12px
                     
 
 
