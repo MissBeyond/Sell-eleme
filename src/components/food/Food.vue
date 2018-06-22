@@ -30,7 +30,8 @@
                 </div>
                 <split></split>
                 <div class="rating">
-                    <div class="titletitle">商品评价</div>
+                    <h1 class="title">商品评价</h1>
+                    <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="food.fatings"></ratingselect>
                 </div>
             </div>
         </div>
@@ -41,6 +42,12 @@ import BScroll from 'better-scroll'//引进这个实现上下滑动的插件
 import Cartcontrol from 'components/cartcontrol/Cartcontrol'
 import Vue from 'vue'
 import Split from 'components/split/Split'
+import Ratingselect from 'components/ratingselect/Ratingselect'
+
+const POSITIVE = 0
+const NEGATAIVE = 1
+const ALL = 2
+
 export default {
     props: {
         food: {
@@ -49,12 +56,21 @@ export default {
     },
     data () {
         return {
-            showFlag: false
-        }
+            showFlag: false,
+            selectType: ALL,
+            onlyContent: true,
+            desc: {
+                all: '全部',
+                positive: '推荐',
+                negative: '吐槽'
+            }
+            }
     },
     methods: {
         show () {
             this.showFlag = true
+            this.selectType = 2
+            this.onlyContent = true
             this.$nextTick(() =>{
                 if(!this.scroll) {
                     this.scoll = new BScroll(this.$refs.food,{
@@ -78,7 +94,9 @@ export default {
     },
     components: {
         Cartcontrol,
-        Split
+        Split,
+        Ratingselect,
+        
     }
 }
 </script>
@@ -175,6 +193,13 @@ export default {
                 font-weight 200
                 line-height 24px
                 color rgb(77, 85, 93)
+        .rating
+            padding-top 18px
+            .title
+                line-height 14px
+                margin-left 18px
+                font-size 14px
+                color rgb(7, 17, 27)
             
 
 
