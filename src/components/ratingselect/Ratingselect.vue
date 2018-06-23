@@ -42,6 +42,7 @@ export default {
 
             }
         }
+        
     },
     computed: {
         positives () {
@@ -53,14 +54,17 @@ export default {
             return this.ratings.filter((rating) => {
             return rating.rateType === NEGATIVE
             })
+
         }
     },
+    
     methods: {
         select (type,event) {
             if(!event._constructed) {
                 return
             }
             this.$emit('select',type)
+            
         },
         toggleContent (event) {
             if(!event._constructed) {
