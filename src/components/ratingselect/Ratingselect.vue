@@ -7,7 +7,7 @@
         </div>
         <div @click="toggleContent" class="switch" :class="{'on':onlyContent}">
             <i class="icon-check_circle"></i>
-            <span class="text">评价内容</span>
+            <span class="text">只看有内容的评价</span>
         </div>
     </div>
 </template>
@@ -109,6 +109,9 @@ export default {
             border-bottom 1px solid rgba(7, 17, 27, 0.1)
             color rgb(147, 153, 159)
             font-size 0
+            &.on
+                .icon-check_circle
+                    color: #00c850
             .icon-check_circle
                 display inline-block
                 vertical-align top
@@ -116,6 +119,7 @@ export default {
                 font-size 24px
             .text
                 display inline-block
+                vertical-align: top
                 font-size 12px
 
 
