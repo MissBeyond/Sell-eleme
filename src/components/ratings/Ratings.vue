@@ -39,7 +39,7 @@
                         <div class="content">
                             <h1 class="title">{{rating.username}}</h1>
                             <div class="star-wrapper">
-                                <star :size="24" :score="rating.score"></star>
+                                <star :size="24" :score="rating.score" class="star"></star>
                                 <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}分钟送达</span>
                             </div>
                             <p class="text">{{rating.text}}</p>

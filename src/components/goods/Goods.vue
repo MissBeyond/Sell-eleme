@@ -89,15 +89,16 @@ export default {
             return 0//默认情况下是返回第一个元素  
         },
         selectFoods () {
-            let foods = []
-            this.goods.forEach((good) => {
-                good.foods.forEach((food) => {
-                    if(food.count) {
-                        foods.push(food)
-                    }
-                })
-            })
-            return foods
+            // let foods = []
+            // this.goods.forEach((good) => {
+            //     good.foods.forEach((food) => {
+            //         if(food.count) {
+            //             foods.push(food)
+            //         }
+            //     })
+            // })
+            // return foods
+            return this.goods.reduce((cal,goods) => cal.concat(goods.foods),[]).filter(food  => food.count)
         }
     },
     methods: {

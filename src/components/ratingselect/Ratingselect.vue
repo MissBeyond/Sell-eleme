@@ -39,10 +39,8 @@ export default {
                     positive: '推荐',
                     negative: '不满意'
                 }
-
             }
-        }
-        
+        } 
     },
     computed: {
         positives () {
