@@ -31,6 +31,7 @@ export default {
     }
   },
   methods: {
+    // axios 请求seller 数据
     getHeaderInfo () {
       axios.get('/api/seller')
       .then(this.getHeaderInfoSucc)
